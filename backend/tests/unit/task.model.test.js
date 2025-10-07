@@ -44,4 +44,48 @@ describe("Task Model", () => {
       });
     });
   });
+
+  // For getting latest tasks
+  describe.only("getLatestFiveTasks with mixed completed tasks", () => {
+    test("returns at most 5 incomplete tasks from a mixed dataset", async () => {
+      const mockRows = [
+        { id: 1, title: "Task 1", completed: false },
+        { id: 2, title: "Task 2", completed: false },
+        { id: 3, title: "Task 3", completed: true },
+        { id: 4, title: "Task 4", completed: false },
+        { id: 5, title: "Task 5", completed: false },
+        { id: 6, title: "Task 6", completed: true },
+        { id: 7, title: "Task 7", completed: false },
+        { id: 8, title: "Task 8", completed: false },
+      ];
+
+      const expectedRows = mockRows
+        .filter((task) => !task.completed)
+        .slice(0, 5);
+
+      pool.query.mockResolvedValue([expectedRows]); // Mocks the database query
+
+      const result = await TaskModel.getLatestFiveTasks();
+
+      expect(result).toHaveLength(5);
+      expect(result).toEqual(expectedRows);
+    });
+
+    test("returns all incomplete tasks if fewer than 5 exist", async () => {
+      const mockRows = [
+        { id: 1, title: "Task 1", completed: false },
+        { id: 2, title: "Task 2", completed: true },
+        { id: 3, title: "Task 3", completed: false },
+      ];
+
+      const expectedRows = mockRows.filter((task) => !task.completed);
+
+      pool.query.mockResolvedValue([expectedRows]);
+
+      const result = await TaskModel.getLatestFiveTasks();
+
+      expect(result).toHaveLength(expectedRows.length);
+      expect(result).toEqual(expectedRows);
+    });
+  });
 });
