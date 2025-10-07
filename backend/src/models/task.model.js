@@ -1,7 +1,7 @@
 import pool from "../db.js";
 
 // Create a new task
-export const createTask = async (title, description) => {
+export const createTask = async (title, description = "") => {
   const [result] = await pool.query(
     "INSERT INTO task (title, description) VALUES (?, ?)",
     [title, description]

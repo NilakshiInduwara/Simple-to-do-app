@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 });
 
 // Automatically create the task table if not exists
-const createTableIfNotExists = async () => {
+export const createTableIfNotExists = async () => {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS task (
       id INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,6 +39,6 @@ const createTableIfNotExists = async () => {
   }
 };
 
-createTableIfNotExists();
+// createTableIfNotExists();
 
 export default pool;

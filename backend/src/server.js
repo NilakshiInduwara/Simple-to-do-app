@@ -2,7 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import taskRoutes from "./routes/task.routes.js";
+import { createTableIfNotExists } from "./db.js";
 
+await createTableIfNotExists();
 dotenv.config();
 const app = express();
 
