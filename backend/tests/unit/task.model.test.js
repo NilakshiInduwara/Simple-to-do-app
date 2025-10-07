@@ -46,7 +46,7 @@ describe("Task Model", () => {
   });
 
   // For getting latest tasks
-  describe.only("getLatestFiveTasks with mixed completed tasks", () => {
+  describe("getLatestFiveTasks with mixed completed tasks", () => {
     test("returns at most 5 incomplete tasks from a mixed dataset", async () => {
       const mockRows = [
         { id: 1, title: "Task 1", completed: false },
@@ -88,4 +88,19 @@ describe("Task Model", () => {
       expect(result).toEqual(expectedRows);
     });
   });
+
+  // For updating tasks as completed
+  test("updates a task as completed", async () => {
+  pool.query.mockResolvedValue([{}]); 
+
+  const result = await TaskModel.updateTaskCompleted(1);
+
+  /* Ensure the correct SQL query and parameters are called */
+  expect(pool.query).toHaveBeenCalledWith(
+    "UPDATE task SET completed = TRUE WHERE id = ?",
+    [1]
+  );
+
+  expect(result).toEqual({ message: "Task updated as completed" });
+});
 });
