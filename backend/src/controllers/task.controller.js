@@ -7,7 +7,7 @@ export const createTask = async (req, res) => {
 
     /* Considering only title is required and description is optional */
     if (!title) {
-      return res.status(400).json({ message: "Title is required" });
+      return res.status(400).json({ error: "Title is required" });
     }
 
     const task = await TaskModel.createTask(title, description);
@@ -28,13 +28,18 @@ export const getLatestFiveTasks = async (req, res) => {
 };
 
 // Mark a task as completed
-export const updateTaskCompleted = async(req, res) => {
+export const updateTaskCompleted = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const result = await TaskModel.updateTaskCompleted(id);
-    res.status(200).json(result);
+
+    if (result === 0) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    res.status(200).json({ message: "Task updated as completed" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};

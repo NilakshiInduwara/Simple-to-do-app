@@ -19,6 +19,9 @@ export const getLatestFiveTasks = async () => {
 
 // Mark a task as completed
 export const updateTaskCompleted = async (id) => {
-  await pool.query("UPDATE task SET completed = TRUE WHERE id = ?", [id]);
-  return { message: "Task updated as completed" };
+  const [result] = await pool.query(
+    "UPDATE task SET completed = TRUE WHERE id = ?",
+    [id]
+  );
+  return result.affectedRows;
 };

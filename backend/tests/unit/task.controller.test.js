@@ -75,12 +75,12 @@ describe("Task Controller", () => {
   // For updating tasks as completed
   test("updateTaskCompleted returns 200", async () => {
     req.params = { id: 1 };
-    TaskModel.updateTaskCompleted = jest.fn().mockResolvedValue({ message: "Task marked as completed" });
+    TaskModel.updateTaskCompleted = jest.fn().mockResolvedValue({ message: "Task updated as completed" });
 
     await TaskController.updateTaskCompleted(req, res);
 
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: "Task marked as completed" });
+    expect(res.json).toHaveBeenCalledWith({ message: "Task updated as completed" });
   });
 
   test("updateTaskCompleted returns 500 when model throws error", async () => {

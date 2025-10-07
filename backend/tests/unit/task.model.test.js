@@ -46,7 +46,7 @@ describe("Task Model", () => {
   });
 
   // For getting latest tasks
-  describe("getLatestFiveTasks with mixed completed tasks", () => {
+  describe("getLatestFiveTasks", () => {
     test("returns at most 5 incomplete tasks from a mixed dataset", async () => {
       const mockRows = [
         { id: 1, title: "Task 1", completed: false },
@@ -90,17 +90,27 @@ describe("Task Model", () => {
   });
 
   // For updating tasks as completed
-  test("updates a task as completed", async () => {
-  pool.query.mockResolvedValue([{}]); 
+  describe("updateTaskCompleted", () => {
+    test("updates a task as completed", async () => {
+      pool.query.mockResolvedValue([{ affectedRows: 1 }]);
 
-  const result = await TaskModel.updateTaskCompleted(1);
+      const result = await TaskModel.updateTaskCompleted(1);
 
-  /* Ensure the correct SQL query and parameters are called */
-  expect(pool.query).toHaveBeenCalledWith(
-    "UPDATE task SET completed = TRUE WHERE id = ?",
-    [1]
-  );
+      /* Ensure the correct SQL query and parameters are called */
+      expect(pool.query).toHaveBeenCalledWith(
+        "UPDATE task SET completed = TRUE WHERE id = ?",
+        [1]
+      );
 
-  expect(result).toEqual({ message: "Task updated as completed" });
-});
+      expect(result).toBe(1);
+    });
+
+    test("returns 0 affectedRows if task not found", async () => {
+      pool.query.mockResolvedValue([{ affectedRows: 0 }]);
+
+      const result = await TaskModel.updateTaskCompleted(999); // non-existent ID
+
+      expect(result).toBe(0);
+    });
+  });
 });
