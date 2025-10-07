@@ -1,7 +1,7 @@
 import pool from "../db.js";
 
 // Create a new task
-export const createTask = async (title, description) => {
+export const createTask = async (title, description = "") => {
   const [result] = await pool.query(
     "INSERT INTO task (title, description) VALUES (?, ?)",
     [title, description]
@@ -19,6 +19,9 @@ export const getLatestFiveTasks = async () => {
 
 // Mark a task as completed
 export const updateTaskCompleted = async (id) => {
-  await pool.query("UPDATE task SET completed = TRUE WHERE id = ?", [id]);
-  return { message: "Task updated as completed" };
+  const [result] = await pool.query(
+    "UPDATE task SET completed = TRUE WHERE id = ?",
+    [id]
+  );
+  return result.affectedRows;
 };
