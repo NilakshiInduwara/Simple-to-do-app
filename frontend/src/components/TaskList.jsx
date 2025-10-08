@@ -9,7 +9,7 @@ const TaskList = ({ tasks, onTaskUpdated }) => {
   return (
     <div className="mx-[5rem] my-[3rem]">
       {tasks.length > 0 ? (
-        <div className="max-h-[80vh] overflow-y-auto pr-3">
+        <div className="max-h-[80vh] overflow-y-auto pr-3 no-scrollbar">
           <ul>
             {tasks.map((task) => (
               <li key={task.id} className="mb-6">
