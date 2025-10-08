@@ -1,0 +1,30 @@
+# Node dependencies
+node_modules/
+jspm_packages/
+web_modules/
+
+# Build output
+dist/
+build/
+coverage/
+lib-cov/
+public/
+
+# Logs and runtime data
+*.log
+*.pid
+*.seed
+*.pid.lock
+report.*.*.*.*.json
+
+# Environment files (keep example files)
+.env
+.env.*.local
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test coverage output
+.nyc_output
