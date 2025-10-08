@@ -23,6 +23,7 @@ const TaskList = ({ tasks, onTaskUpdated }) => {
                   <div>
                     <button
                       onClick={() => handleComplete(task.id)}
+                      data-testid={`update-btn-${task.id}`}
                       className="absolute right-4 bottom-4 text-black py-1 px-7 border border-gray-900 rounded-lg hover:bg-gray-300 transition"
                     >
                       Done
