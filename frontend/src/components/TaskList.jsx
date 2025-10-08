@@ -9,7 +9,7 @@ const TaskList = ({ tasks, onTaskUpdated }) => {
   return (
     <div className="mx-[5rem] my-[3rem]">
       {tasks.length > 0 ? (
-        <div className="max-h-[80vh] overflow-y-auto pr-3">
+        <div className="max-h-[80vh] overflow-y-auto pr-3 no-scrollbar">
           <ul>
             {tasks.map((task) => (
               <li key={task.id} className="mb-6">
@@ -23,6 +23,7 @@ const TaskList = ({ tasks, onTaskUpdated }) => {
                   <div>
                     <button
                       onClick={() => handleComplete(task.id)}
+                      data-testid={`update-btn-${task.id}`}
                       className="absolute right-4 bottom-4 text-black py-1 px-7 border border-gray-900 rounded-lg hover:bg-gray-300 transition"
                     >
                       Done
