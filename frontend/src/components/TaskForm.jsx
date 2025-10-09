@@ -8,6 +8,7 @@ const TaskForm = ({ onTaskAdded }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();  // to stop page reload
         if(!title) alert("Title is required");
+        alert("Task added successfully!");
 
         const newTask = await createTask({ title, description });
 

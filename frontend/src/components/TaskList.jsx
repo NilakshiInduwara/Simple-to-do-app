@@ -4,6 +4,7 @@ const TaskList = ({ tasks, onTaskUpdated }) => {
   const handleComplete = async (id) => {
     await updateTaskCompleted(id);
     onTaskUpdated(id);
+    alert("Task marked as completed!");
   };
 
   return (
