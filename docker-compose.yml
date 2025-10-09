@@ -56,5 +56,28 @@ services:
       retries: 5
       start_period: 20s
 
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=todoapp_db
+    depends_on:
+      db:
+        condition: service_healthy
+    command: npm test
+
+  frontend-test:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm test
+    depends_on:
+      - backend
+
 volumes:
   db_data:

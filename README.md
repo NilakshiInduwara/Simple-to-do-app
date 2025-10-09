@@ -59,3 +59,7 @@ docker-compose down
 # To stop and remove everything (including volumes):
 docker-compose down -v
 ```
+
+# Run both backend and frontend tests
+```bash
+docker-compose up --abort-on-container-exit backend-test frontend-test
